@@ -12,7 +12,7 @@ namespace Kursova.Models
         [MaxLength(50)]
         public string TourName { get; set; }
         public string TourDescription { get; set; }
-        public string Image { get; set; }
+        public string Image { get; set; } = "noimage.png";
 
         public double Price { get; set; }
         [Required]

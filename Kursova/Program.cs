@@ -27,6 +27,7 @@ namespace Kursova
             builder.Services.AddTransient<IHomeRepository, HomeRepository>();
             builder.Services.AddTransient<ICartRepository, CartRepository>();
             builder.Services.AddTransient<IUserOrderRepository, UserOrderRepository>();
+            builder.Services.AddScoped<ITourRepository, TourRepository>(); 
 
             var app = builder.Build();
             //using (var scope = app.Services.CreateScope())

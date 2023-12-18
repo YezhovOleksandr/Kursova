@@ -1,4 +1,8 @@
-﻿@model TourDisplayModel
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@model TourDisplayModel
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -30,8 +34,12 @@
         </div>
     </form>
 </div>
-
+@if (User.IsInRole("Admin"))
+{
+    <a class="btn btn-primary" href="/Tour/CreateTour">Create Tour</a>
+}
 <div class="w-100 mt-4 d-flex flex-wrap">
+    
     @foreach (var item in Model.Tours)
     {
         <div class="card mx-2 my-4" style="width: 22rem;">
@@ -46,10 +54,20 @@
                     price: @item.Price
                 </p>
                 <p>
-                    Desctiption: @item.TourDescription
+                    Description: @item.TourDescription
 
                 </p>
-                <button type="button" onclick="add(@item.TourId)" class="btn btn-primary">add to cart</button>
+                <div class="btn-group">
+                <button type="button" onclick="add(@item.TourId)" class="btn btn-primary m-2">add to cart</button>
+                @if (User.IsInRole("Admin"))
+                {
+                    <form asp-controller="Tour" asp-route-id="@item.TourId">
+                            <button asp-controller="Tour" asp-action="DeleteTour" formmethod="post" asp-route-id="@item.TourId" class="btn btn-danger m-2">Delete Tour</button>
+                            <button asp-controller="Tour" asp-action="UpdateGroup" formmethod="get" asp-route-id="@item.TourId" class="btn btn-warning m-2">Update Tour</button>
+                    </form>
+                    
+                }
+                </div>
             </div>
         </div>
     }
@@ -79,5 +97,14 @@
                 console.log(err)
             }
         }
+        async function update(tourId) {
+            debugger;
+            var response = await fetch(`/Tour/UpdateTour?tourId=${tourId}`)
+            console.log(response)
+            if (response.status == 200) {
+                location.href="/Tour/UpdateTour/${tourId}"
+            }
+        }
+        
     </script>
 }

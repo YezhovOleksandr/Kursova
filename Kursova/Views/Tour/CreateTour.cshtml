@@ -1,0 +1,27 @@
+﻿@model Kursova.ViewModels.CreateTourViewModel
+
+<form asp-action="CreateTour" asp-controller="Tour" method="post">
+    <select class="form-select" id="categoryIdCreateTour" name="categoryId">
+        <option selected>Choose...</option>
+        @foreach (var category in Model.Categories)
+        {
+            <option value="@category.CategoryId">@category.CategoryName</option>
+        }
+    </select>
+    <div class="mb-3">
+        <label for="TourName" class="form-label">Tour Name</label>
+        <input class="form-control" id="TourName" aria-describedby="emailHelp" value="@Model.TourName" name="TourName" asp-for="TourName">
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Tour Description</label>
+        <input class="form-control" id="TourDescription" aria-describedby="emailHelp" value="@Model.TourDescription" name="TourDescription" asp-for="TourDescription">
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Price</label>
+        <input  class="form-control" id="Price" asp-for="Price">
+    </div>
+    <div class="mb-3 form-check">
+        
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
