@@ -13,7 +13,7 @@ namespace Kursova.Controllers
             _cartRepository = cartRepository;
         }
         public async Task<IActionResult> AddItem(int tourId, int qty = 1, int redirect = 0)
-        {
+            {
             var cartCount = await _cartRepository.AddItem(tourId, qty);
             if (redirect == 0)
             {
@@ -39,6 +39,16 @@ namespace Kursova.Controllers
         {
             int cartItem = await _cartRepository.GetCartItemCount(); 
             return Ok(cartItem);
+        }
+
+        public async Task<IActionResult> CheckOut()
+        {
+            bool isCheckedOut = await _cartRepository.DoCheckOut();
+            if (!isCheckedOut)
+            {
+                throw new Exception("Server Error");
+            }
+            return RedirectToAction("Index", "Home");
         }
 
     }

@@ -2,7 +2,6 @@
 
 namespace Kursova.Models
 {
-    [Table("OrderDetail")]
     public class OrderDetail
     {
         public int OrderDetailId { get; set; }
@@ -10,8 +9,9 @@ namespace Kursova.Models
 
         public int TourId { get; set; }
         public double UnitPrice { get; set; }
+        public int Quantity { get; set; }
         public Order Order { get; set; }
 
-        public Tour tour { get; set; }
+        public Tour Tour { get; set; }
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Kursova.Data.Migrations
+namespace Kursova.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -39,13 +39,16 @@ namespace Kursova.Data.Migrations
                     b.Property<int>("TourId")
                         .HasColumnType("int");
 
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
+
                     b.HasKey("CartDetailId");
 
                     b.HasIndex("ShoppingCartId");
 
                     b.HasIndex("TourId");
 
-                    b.ToTable("CartDetail");
+                    b.ToTable("CartDetails");
                 });
 
             modelBuilder.Entity("Kursova.Models.Categories.Category", b =>
@@ -91,7 +94,7 @@ namespace Kursova.Data.Migrations
 
                     b.HasIndex("OrderStatusId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Kursova.Models.OrderDetail", b =>
@@ -103,6 +106,9 @@ namespace Kursova.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDetailId"));
 
                     b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<int>("TourId")
@@ -117,7 +123,7 @@ namespace Kursova.Data.Migrations
 
                     b.HasIndex("TourId");
 
-                    b.ToTable("OrderDetail");
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("Kursova.Models.OrderStatus", b =>
@@ -138,7 +144,7 @@ namespace Kursova.Data.Migrations
 
                     b.HasKey("OrderStatusId");
 
-                    b.ToTable("OrderStatus");
+                    b.ToTable("OrderStatuses");
                 });
 
             modelBuilder.Entity("Kursova.Models.ShoppingCart", b =>
@@ -158,7 +164,7 @@ namespace Kursova.Data.Migrations
 
                     b.HasKey("ShoppingCartId");
 
-                    b.ToTable("ShoppingCart");
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("Kursova.Models.Tour", b =>
@@ -192,7 +198,7 @@ namespace Kursova.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Tour");
+                    b.ToTable("Tours");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -401,7 +407,7 @@ namespace Kursova.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Kursova.Models.Tour", "tour")
+                    b.HasOne("Kursova.Models.Tour", "Tour")
                         .WithMany("CardDetails")
                         .HasForeignKey("TourId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -409,7 +415,7 @@ namespace Kursova.Data.Migrations
 
                     b.Navigation("ShoppingCart");
 
-                    b.Navigation("tour");
+                    b.Navigation("Tour");
                 });
 
             modelBuilder.Entity("Kursova.Models.Order", b =>
@@ -444,13 +450,13 @@ namespace Kursova.Data.Migrations
 
             modelBuilder.Entity("Kursova.Models.Tour", b =>
                 {
-                    b.HasOne("Kursova.Models.Categories.Category", "Categories")
+                    b.HasOne("Kursova.Models.Categories.Category", "Category")
                         .WithMany("Tours")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Categories");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

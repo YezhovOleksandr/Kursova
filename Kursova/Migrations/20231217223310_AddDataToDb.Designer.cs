@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Kursova.Data.Migrations
+namespace Kursova.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231216134734_addNewColumnToOrderStatusTable")]
-    partial class addNewColumnToOrderStatusTable
+    [Migration("20231217223310_AddDataToDb")]
+    partial class AddDataToDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace Kursova.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartDetailId"));
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.Property<int>("ShoppingCartId")
                         .HasColumnType("int");
@@ -161,7 +164,7 @@ namespace Kursova.Data.Migrations
                     b.ToTable("ShoppingCart");
                 });
 
-            modelBuilder.Entity("Kursova.Models.Tours.Tour", b =>
+            modelBuilder.Entity("Kursova.Models.Tour", b =>
                 {
                     b.Property<int>("TourId")
                         .ValueGeneratedOnAdd()
@@ -178,6 +181,10 @@ namespace Kursova.Data.Migrations
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
+
+                    b.Property<string>("TourDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TourName")
                         .IsRequired()
@@ -336,12 +343,10 @@ namespace Kursova.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -378,12 +383,10 @@ namespace Kursova.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -396,12 +399,12 @@ namespace Kursova.Data.Migrations
             modelBuilder.Entity("Kursova.Models.CartDetail", b =>
                 {
                     b.HasOne("Kursova.Models.ShoppingCart", "ShoppingCart")
-                        .WithMany()
+                        .WithMany("CartDetails")
                         .HasForeignKey("ShoppingCartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Kursova.Models.Tours.Tour", "tour")
+                    b.HasOne("Kursova.Models.Tour", "Tour")
                         .WithMany("CardDetails")
                         .HasForeignKey("TourId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -409,7 +412,7 @@ namespace Kursova.Data.Migrations
 
                     b.Navigation("ShoppingCart");
 
-                    b.Navigation("tour");
+                    b.Navigation("Tour");
                 });
 
             modelBuilder.Entity("Kursova.Models.Order", b =>
@@ -431,7 +434,7 @@ namespace Kursova.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Kursova.Models.Tours.Tour", "tour")
+                    b.HasOne("Kursova.Models.Tour", "tour")
                         .WithMany("OrderDetail")
                         .HasForeignKey("TourId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -442,7 +445,7 @@ namespace Kursova.Data.Migrations
                     b.Navigation("tour");
                 });
 
-            modelBuilder.Entity("Kursova.Models.Tours.Tour", b =>
+            modelBuilder.Entity("Kursova.Models.Tour", b =>
                 {
                     b.HasOne("Kursova.Models.Categories.Category", "Categories")
                         .WithMany("Tours")
@@ -514,7 +517,12 @@ namespace Kursova.Data.Migrations
                     b.Navigation("OrderDetail");
                 });
 
-            modelBuilder.Entity("Kursova.Models.Tours.Tour", b =>
+            modelBuilder.Entity("Kursova.Models.ShoppingCart", b =>
+                {
+                    b.Navigation("CartDetails");
+                });
+
+            modelBuilder.Entity("Kursova.Models.Tour", b =>
                 {
                     b.Navigation("CardDetails");
 

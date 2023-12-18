@@ -59,8 +59,12 @@
 @section Scripts {
     <script>
         async function add(tourId) {
+            var usernameEL = document.getElementById("username");
+            if (usernameEL == null) {
+                window.location.href = "/Identity/Account/Login"
+            }
+            
             try {
-                alert("method is working")
                 var response = await fetch(`/Cart/AddItem?tourId=${tourId}`)
                 console.log(response)
                 if (response.status == 200) {

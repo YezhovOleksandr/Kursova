@@ -2,20 +2,27 @@
 
 #nullable disable
 
-namespace Kursova.Data.Migrations
+namespace Kursova.Migrations
 {
     /// <inheritdoc />
-    public partial class addData : Migration
+    public partial class AddUnitPriceToCartDetailsTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
                 name: "Quantity",
-                table: "CartDetail",
+                table: "OrderDetails",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
+
+            migrationBuilder.AddColumn<double>(
+                name: "UnitPrice",
+                table: "CartDetails",
+                type: "float",
+                nullable: false,
+                defaultValue: 0.0);
         }
 
         /// <inheritdoc />
@@ -23,7 +30,11 @@ namespace Kursova.Data.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "Quantity",
-                table: "CartDetail");
+                table: "OrderDetails");
+
+            migrationBuilder.DropColumn(
+                name: "UnitPrice",
+                table: "CartDetails");
         }
     }
 }

@@ -66,7 +66,7 @@
             alert("method is working")
             var response = await fetch(`/Cart/GetTotalItemInCart`)
             if (response.status == 200) {
-                debugger;
+                console.log(response)
                 var rezult = await response.json()
                 console.log(rezult);
                 var cartCountEl = document.getElementById("cartCount")

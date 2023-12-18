@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Kursova.Models
 {
-    [Table("Tour")]
     public class Tour
     {
         public int TourId { get; set; }
@@ -18,7 +17,7 @@ namespace Kursova.Models
         public double Price { get; set; }
         [Required]
         public int CategoryId { get; set; }
-        public Category Categories { get; set; }
+        public Category Category { get; set; }
         public List<OrderDetail> OrderDetail { get; set; }
         public List<CartDetail> CardDetails { get; set; }
 

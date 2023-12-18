@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Kursova.Data.Migrations
+namespace Kursova.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231216175932_addData")]
-    partial class addData
+    [Migration("20231217235229_addDatatodb1")]
+    partial class addDatatodb1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,7 +48,7 @@ namespace Kursova.Data.Migrations
 
                     b.HasIndex("TourId");
 
-                    b.ToTable("CartDetail");
+                    b.ToTable("CartDetails");
                 });
 
             modelBuilder.Entity("Kursova.Models.Categories.Category", b =>
@@ -94,7 +94,7 @@ namespace Kursova.Data.Migrations
 
                     b.HasIndex("OrderStatusId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Kursova.Models.OrderDetail", b =>
@@ -120,7 +120,7 @@ namespace Kursova.Data.Migrations
 
                     b.HasIndex("TourId");
 
-                    b.ToTable("OrderDetail");
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("Kursova.Models.OrderStatus", b =>
@@ -141,7 +141,7 @@ namespace Kursova.Data.Migrations
 
                     b.HasKey("OrderStatusId");
 
-                    b.ToTable("OrderStatus");
+                    b.ToTable("OrderStatuses");
                 });
 
             modelBuilder.Entity("Kursova.Models.ShoppingCart", b =>
@@ -161,7 +161,7 @@ namespace Kursova.Data.Migrations
 
                     b.HasKey("ShoppingCartId");
 
-                    b.ToTable("ShoppingCart");
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("Kursova.Models.Tour", b =>
@@ -195,7 +195,7 @@ namespace Kursova.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Tour");
+                    b.ToTable("Tours");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -404,7 +404,7 @@ namespace Kursova.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Kursova.Models.Tour", "tour")
+                    b.HasOne("Kursova.Models.Tour", "Tour")
                         .WithMany("CardDetails")
                         .HasForeignKey("TourId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -412,7 +412,7 @@ namespace Kursova.Data.Migrations
 
                     b.Navigation("ShoppingCart");
 
-                    b.Navigation("tour");
+                    b.Navigation("Tour");
                 });
 
             modelBuilder.Entity("Kursova.Models.Order", b =>

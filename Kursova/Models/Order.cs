@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Kursova.Models
 {
-    [Table("Order")]
     public class Order
     {
         public int OrderId { get; set; }

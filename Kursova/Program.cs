@@ -10,7 +10,8 @@ namespace Kursova
         public  static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Services.AddAuthentication();
+            builder.Services.AddAuthorization();
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -25,11 +26,12 @@ namespace Kursova
 
             builder.Services.AddTransient<IHomeRepository, HomeRepository>();
             builder.Services.AddTransient<ICartRepository, CartRepository>();
+            builder.Services.AddTransient<IUserOrderRepository, UserOrderRepository>();
 
             var app = builder.Build();
             //using (var scope = app.Services.CreateScope())
             //{
-            //     DbSeeder.SeedDefaultData(scope.ServiceProvider).Wait();
+            //    DbSeeder.SeedDefaultData(scope.ServiceProvider).Wait();
             //}
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
